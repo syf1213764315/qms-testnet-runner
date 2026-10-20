@@ -22,7 +22,7 @@ npm run streak
 
 ### 常驻自动运行（推荐）
 
-完成 `npm run streak:prepare` 后，用**守护进程** 7×24 小时按间隔自动执行 Streak（默认 **每 60 分钟** 检查；活动进行中才会上链，已完成当日会跳过）：
+完成 `npm run streak:prepare` 后，用**守护进程** 7×24 小时按间隔自动执行 Streak（默认 **每 24 小时** 检查；活动进行中才会上链，已完成当日会跳过）：
 
 ```sh
 npm run streak:daemon
@@ -31,7 +31,7 @@ npm run streak:daemon
 - **Linux/macOS 开机自启**：`npm run streak:daemon:install`（systemd 用户服务，崩溃自动重启）
 - **停止服务**：`npm run streak:daemon:uninstall`
 - **只跑一轮**：`npm run streak:daemon -- --once`
-- **改间隔**：`npm run streak:daemon -- --interval-minutes 30`
+- **改间隔**：`npm run streak:daemon -- --interval-minutes 60`（最短 1 分钟，最长 1440 分钟即 24 小时）
 - 日志：`reports/streak-daemon/`（含 `daemon.log` 与各次子进程输出）
 - Linux/macOS 无人值守：可在 `.secrets/daemon.env` 中设置 `QMS_KEYSTORE_PASSWORD=...`（勿提交 Git）；Windows 使用 DPAPI 时通常不需要
 

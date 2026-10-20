@@ -17,7 +17,7 @@ const optionalEnvFile = resolve(projectRoot, '.secrets/daemon.env');
 
 export function loadDaemonConfig(path = defaultConfigPath) {
   const raw = JSON.parse(readFileSync(path, 'utf8'));
-  const intervalMinutes = Number(raw.intervalMinutes ?? 60);
+  const intervalMinutes = Number(raw.intervalMinutes ?? 1440);
   if (!Number.isFinite(intervalMinutes) || intervalMinutes < 1 || intervalMinutes > 1440)
     throw new Error(err.daemonInterval);
   return {

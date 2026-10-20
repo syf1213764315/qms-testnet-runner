@@ -228,13 +228,18 @@ npm run streak -- --dry-run
   noCommandOutput: '命令未产生结果数据。',
   streakChildStart: '无法启动 Streak 子命令。',
   streakChildStop: 'Streak 子命令已停止。',
-  daemonStarted: (minutes, address) => `Streak 守护进程已启动 · 每 ${minutes} 分钟检查 · 钱包 ${address}`,
+  daemonStarted: (minutes, address) => {
+    const cadence = minutes >= 1440 && minutes % 1440 === 0
+      ? `每 ${minutes / 1440} 天（${minutes} 分钟）`
+      : `每 ${minutes} 分钟`;
+    return `Streak 守护进程已启动 · ${cadence} 检查 · 钱包 ${address}`;
+  },
   daemonTick: phase => `执行 Streak 检查 · 活动阶段：${phase}`,
   daemonChildExit: code => `Streak 子进程结束 · 退出码 ${code}`,
   daemonCampaignEnded: end => `活动已结束（${end}），守护进程退出。`,
-  daemonHelp: `npm run streak:daemon              常驻运行（默认每 60 分钟检查一次）
+  daemonHelp: `npm run streak:daemon              常驻运行（默认每 24 小时检查一次）
 npm run streak:daemon -- --once    只执行一轮
-npm run streak:daemon -- --interval-minutes 30
+npm run streak:daemon -- --interval-minutes 60
 npm run streak:daemon:install        Linux/macOS：安装 systemd 用户服务（开机自启）
 npm run streak:daemon:uninstall
 可选：在 .secrets/daemon.env 中设置 QMS_KEYSTORE_PASSWORD（勿提交 Git）`,

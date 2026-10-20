@@ -9,10 +9,10 @@ import { fileURLToPath } from 'node:url';
 
 const configPath = resolve(fileURLToPath(new URL('../config/daemon.json', import.meta.url)));
 
-test('daemon config defaults to hourly checks and campaign exit', () => {
+test('daemon config defaults to daily checks and campaign exit', () => {
   const config = loadDaemonConfig(configPath);
-  assert.equal(config.intervalMinutes, 60);
-  assert.equal(config.intervalMs, 3_600_000);
+  assert.equal(config.intervalMinutes, 1440);
+  assert.equal(config.intervalMs, 86_400_000);
   assert.equal(config.exitWhenCampaignEnded, true);
   assert.equal(config.logSubdir, 'reports/streak-daemon');
 });

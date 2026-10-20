@@ -7,7 +7,7 @@ SERVICE="qms-streak-daemon.service"
 mkdir -p "$UNIT_DIR"
 cat >"$UNIT_DIR/$SERVICE" <<EOF
 [Unit]
-Description=QMS Testnet Streak daemon (hourly on-chain checks)
+Description=QMS Testnet Streak daemon (daily on-chain checks, 24h interval)
 After=network-online.target
 Wants=network-online.target
 
