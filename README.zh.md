@@ -100,7 +100,7 @@ npm start -- --no-color
 
 启动器预览：`bash start.sh --dry-run`，或 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 --dry-run`。dry-run 不上链，并明确跳过依赖的 increment/liquidity。
 
-默认：滑点 1%，每笔原生操作最多 1 QMS，每笔 gas 最多 0.05 QMS，保留 0.1 QMS 作 gas。滑点 1–500 bps（0.01%–5%）。
+默认：滑点 1%，每笔原生操作最多 1 QMS，单笔 gas 费用上限 0.5 QMS（预算预检按每笔 0.05 QMS 预留），保留 0.1 QMS 作 gas。滑点 1–500 bps（0.01%–5%）。
 
 ## 钱包配置
 

@@ -66,7 +66,7 @@ export const err = {
   qmsRange: max => `测试数量须在 0 与 ${max} QMS 之间。`,
   slippage: '滑点须在 1–500 bps 之间。',
   minOutZero: '最小输出为零；金额过小。',
-  gasCap: 'Gas 超过上限 0.05 QMS。',
+  gasCap: max => `Gas 超过上限 ${max} QMS。`,
   balanceLow: '余额不足：需要交易金额 + gas，并保留 0.1 QMS。请使用水龙头。',
   streakWalletCtx: 'Streak 钱包上下文不匹配。',
   nativeCap: '交易原生金额超过限制。',

@@ -84,9 +84,12 @@ export function minimum(amount, bps) {
   if (value <= 0n) throw new Error(err.minOutZero);
   return value;
 }
+export function gasReserveWei() {
+  return parseEther(config.gasReserveQms ?? config.maxGasQms);
+}
 export function checkBudget(balance, value, gasLimit, gasPrice) {
   const maxFee = gasLimit * gasPrice;
-  if (maxFee > parseEther(config.maxGasQms)) throw new Error(err.gasCap);
+  if (maxFee > parseEther(config.maxGasQms)) throw new Error(err.gasCap(config.maxGasQms));
   if (balance < value + maxFee + parseEther(config.reserveQms))
     throw new Error(err.balanceLow);
   return maxFee;

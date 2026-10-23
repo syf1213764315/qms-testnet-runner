@@ -1,5 +1,5 @@
 import { parseEther, parseUnits, formatEther } from 'ethers';
-import { config, amountQms, minimum, safeError } from './lib.mjs';
+import { config, amountQms, minimum, safeError, gasReserveWei } from './lib.mjs';
 import { err, skipReason, step as steps } from './messages.mjs';
 
 // Each existing CLI action verifies its own receipt and state changes before returning.
@@ -48,7 +48,7 @@ export async function runWorkflow({ execute, checkpoint, broadcast = false,
         throw new Error(err.networkQwap);
     });
     // Allow for deploy, increment, swap, approval and liquidity, each at its configured cap.
-    const required = swapWei + liquidityWei + parseEther(config.reserveQms) + 5n * parseEther(config.maxGasQms);
+    const required = swapWei + liquidityWei + parseEther(config.reserveQms) + 5n * gasReserveWei();
     const before = last(await step(steps.walletBudget, ['wallet'], results => {
       if (parseEther(last(results).qms) < required)
         throw new Error(err.workflowMinQms(formatEther(required)));

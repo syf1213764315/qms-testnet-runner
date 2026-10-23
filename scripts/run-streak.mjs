@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { getAddress, parseEther, formatEther } from 'ethers';
-import { config, root, save, connect, loadWallet, childEnvironment, safeError } from './lib.mjs';
+import { config, root, save, connect, loadWallet, childEnvironment, safeError, gasReserveWei } from './lib.mjs';
 import { createOutputParser, parseOutput } from './workflow.mjs';
 import { createLogger } from './logger.mjs';
 import { campaign, streakWindow, streakProgress, turkeyTime as formatLocalTime } from './streak-calendar.mjs';
@@ -75,7 +75,7 @@ try {
             QMS_TASK_NOT_BEFORE: context.notBefore, QMS_TASK_NOT_AFTER: context.notAfter });
           const amount = parseEther(context.operationId.endsWith(':swap') ? campaign.swapAmountQms : campaign.liquidityAmountQms);
           const remaining = args[0] === 'swap' ? amount + parseEther(campaign.liquidityAmountQms) : amount;
-          const needed = remaining + parseEther(config.reserveQms) + BigInt(args[0] === 'swap' ? 3 : 2) * parseEther(config.maxGasQms);
+          const needed = remaining + parseEther(config.reserveQms) + BigInt(args[0] === 'swap' ? 3 : 2) * gasReserveWei();
           if (await provider.getBalance(address) < needed) throw new Error(err.streakDailyNeed(formatEther(needed)));
         }
         logger.note(log.streakCmd(args[0], Boolean(context)));
@@ -101,7 +101,7 @@ try {
       if (values.prepare) {
         await execute(['status'], null);
         await execute(['wallet', '--address', address], null);
-        const perDay = parseEther(campaign.swapAmountQms) + parseEther(campaign.liquidityAmountQms) + 3n * parseEther(config.maxGasQms);
+        const perDay = parseEther(campaign.swapAmountQms) + parseEther(campaign.liquidityAmountQms) + 3n * gasReserveWei();
         state = { ...state, role, preparedAt: new Date().toISOString() };
         save(stateRelative, state);
         save('.cache/streak-wallet.json', { campaignId: campaign.id, address, role });

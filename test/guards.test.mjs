@@ -19,7 +19,7 @@ test('gas and reserve are counted together at exact balance boundary', () => {
   const required = value + gasLimit * price + parseEther('0.1');
   assert.throws(() => checkBudget(required - 1n, value, gasLimit, price));
   assert.equal(checkBudget(required, value, gasLimit, price), gasLimit * price);
-  assert.throws(() => checkBudget(parseEther('10'), value, gasLimit, 1000000000000n));
+  assert.throws(() => checkBudget(parseEther('10'), value, gasLimit, 10000000000000n));
 });
 test('slippage cannot disable output protection', () => {
   for (const bps of [0, -1, 501, 10000, NaN, 1.5]) assert.throws(() => minimum(1000000n, bps));

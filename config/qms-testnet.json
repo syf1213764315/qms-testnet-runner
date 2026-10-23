@@ -8,7 +8,8 @@
   "confirmations": 2,
   "receiptTimeoutMs": 180000,
   "reserveQms": "0.1",
-  "maxGasQms": "0.05",
+  "maxGasQms": "0.5",
+  "gasReserveQms": "0.05",
   "maxActionQms": "1",
   "slippageBps": 100,
   "contracts": {
